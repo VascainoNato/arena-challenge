@@ -34,5 +34,11 @@ export const fetchPosts = async (
   // We send a Post to the API with the query in the request body
   const res = await api.post("", { query });
   // We return only the useful data from the response.
+  if (res.data.errors) {
+    console.error("GraphQL Errors:", res.data.errors);
+  }
+    if (!res.data?.data?.posts) {
+    throw new Error("No posts returned from Product Hunt API.");
+  }
   return res.data.data.posts;
 };
