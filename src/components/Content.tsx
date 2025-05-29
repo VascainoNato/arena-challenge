@@ -74,7 +74,7 @@ const Content = ({ order }: ContentProps) => {
         console.error("Erro ao atualizar votos:", err);
 
         if (err?.response?.status === 429) {
-          retryTimeout = Math.min(retryTimeout * 2, 60000); // ⏱️ aplica backoff
+          retryTimeout = Math.min(retryTimeout * 2, 60000); 
           console.warn(`Rate limited. Reagendando em ${retryTimeout / 1000}s`);
         }
       }
@@ -82,7 +82,7 @@ const Content = ({ order }: ContentProps) => {
       timeoutId = setTimeout(updateVotes, retryTimeout); 
     };
 
-    timeoutId = setTimeout(updateVotes, retryTimeout); // ⏳ primeira chamada
+    timeoutId = setTimeout(updateVotes, retryTimeout); 
 
     return () => clearTimeout(timeoutId); 
   }, [order]);
@@ -97,66 +97,66 @@ const Content = ({ order }: ContentProps) => {
   }, [posts, voteMap, order]);
 
   return (
-    <div className="flex flex-1 flex-col overflow-y-auto p-4 pt-4 pr-8  bg-gray-100">
-    {orderedPosts.map((post, index) => {
-        const isUpvoted = justVoted[post.id] === true;
-
-        return (
-          <div
-            key={`${post.id}-${index}`}
-            className="mb-2 mt-2 py-3 pr-6 pl-4 md:pr-3 md:pl-3  bg-white rounded-xl flex gap-4 items-center cursor-pointer"
-          >
-            <img
-              src={post.thumbnail.url}
-              alt={post.name}
-              className="w-16 h-16 object-cover rounded-lg"
-              loading="lazy"
-            />
-            <div className="flex flex-col flex-1 pr-6">
-              <h2 className="font-bold">{post.name}</h2>
-              <p className="text-sm text-gray-600">{post.tagline}</p>
-            </div>
-
-             <div
-              className={`flex-col items-center rounded-2xl px-4 py-1 hidden md:flex
-                ${isUpvoted ? "bg-[#FF6154] border-[#FF6154]" : "bg-white border-gray-200"} 
-                border`}
+    <div className="flex flex-1 flex-col overflow-y-auto p-4 pt-2 pr-8 bg-gray-100 xl:justify-center xl:items-center">
+      <h1 className="hidden md:flex justify-start items-start w-full md:pl-4 md:pt-4 md:pb-4 md:font-semibold xl:w-full xl:max-w-7xl ">Top Products Launching Today</h1>
+      {orderedPosts.map((post, index) => {
+          const isUpvoted = justVoted[post.id] === true;
+          return (
+            <div
+              key={`${post.id}-${index}`}
+              className="mb-2 mt-2 py-3 pr-6 pl-4 md:pr-3 md:pl-3  bg-white rounded-xl flex gap-4 items-center cursor-pointer xl:w-full xl:max-w-7xl "
             >
               <img
-                src={isUpvoted ? iconchatactive : iconchatbase}
-                alt="icon"
-                className="h-8"
+                src={post.thumbnail.url}
+                alt={post.name}
+                className="w-16 h-16 object-cover rounded-lg"
+                loading="lazy"
               />
-              <span
-                className={`font-bold ${
-                  isUpvoted ? "text-white" : "text-gray-600"
-                }`}
-              >
-                {voteMap[post.id] ?? post.votesCount}
-              </span>
-            </div>
+              <div className="flex flex-col flex-1 pr-10">
+                <h2 className="font-bold">{post.name}</h2>
+                <p className="text-sm text-gray-600">{post.tagline}</p>
+              </div>
 
-           <div
-              className={`flex flex-col items-center rounded-2xl px-4 py-1 absolute md:static right-3
-                ${isUpvoted ? "bg-[#FF6154] border-[#FF6154]" : "bg-white border-gray-200"} 
-                border`}
-            >
-              <img
-                src={isUpvoted ? iconactive : iconbase}
-                alt="icon"
-                className="h-8"
-              />
-              <span
-                className={`font-bold ${
-                  isUpvoted ? "text-white" : "text-gray-600"
-                }`}
+              <div
+                className={`flex-col items-center rounded-2xl px-4 py-1 hidden md:flex border-2
+                  ${isUpvoted ? "bg-[#FF6154] border-[#FF6154] border-2" : "bg-white border-gray-200 border-2"} 
+                  border`}
               >
-                {voteMap[post.id] ?? post.votesCount}
-              </span>
+                <img
+                  src={isUpvoted ? iconchatactive : iconchatbase}
+                  alt="icon"
+                  className="h-8"
+                />
+                <span
+                  className={`font-bold ${
+                    isUpvoted ? "text-white" : "text-gray-600"
+                  }`}
+                >
+                  {voteMap[post.id] ?? post.votesCount}
+                </span>
+              </div>
+
+            <div
+                className={`flex flex-col items-center rounded-2xl px-4 py-1 absolute md:static right-3
+                  ${isUpvoted ? "bg-[#FF6154] border-[#FF6154] border-2" : "bg-white border-gray-200 border-2"} 
+                  border`}
+              >
+                <img
+                  src={isUpvoted ? iconactive : iconbase}
+                  alt="icon"
+                  className="h-8"
+                />
+                <span
+                  className={`font-bold ${
+                    isUpvoted ? "text-white" : "text-gray-600"
+                  }`}
+                >
+                  {voteMap[post.id] ?? post.votesCount}
+                </span>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
       {loading && <p className="text-center py-4">Loading...</p>}
     </div>
   );

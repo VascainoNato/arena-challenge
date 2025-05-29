@@ -12,7 +12,6 @@ const Toggle = ({ activeTab, setActiveTab }: ToggleProps) => {
   const activeClass = "border-[#FF6154] text-[#FF6154] font-bold border-b-4";
   // Class to set default color when disabled.
   const inactiveText = "text-gray-500";
-
   return (
     <div className="flex w-full pt-0 md:hidden">
       <button

@@ -32,7 +32,7 @@ const Header = () => {
       {/* Header Tablet + */}
       <div className="flex items-center pt-6 md:pt-0">
         <div className='hidden md:flex h-20 items-center justify-center w-full border-b border-gray-200'>
-          <div className='flex h-20 w-full max-w-7xl justify-between items-center md:px-6'>
+          <div className='flex h-20 w-full max-w-7xl justify-between items-center md:px-6 xl:px-0'>
             {/* First Section of Laptop Header - Logo Section + Search */}
             <div className='flex items-center justify-between gap-4 lg:gap-6 xl:gap-0'>
               <img src={productHunt} alt="logo-product-hunt" className='h-10 cursor-pointer'/>
