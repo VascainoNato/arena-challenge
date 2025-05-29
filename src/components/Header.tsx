@@ -35,9 +35,9 @@ const Header = () => {
           <div className='flex h-20 w-full max-w-7xl justify-between items-center md:px-6'>
             {/* First Section of Laptop Header - Logo Section + Search */}
             <div className='flex items-center justify-between gap-4 lg:gap-6 xl:gap-0'>
-              <img src={productHunt} alt="logo-product-hunt" className='h-10'/>
+              <img src={productHunt} alt="logo-product-hunt" className='h-10 cursor-pointer'/>
               <img src={search} alt="search" className='h-10 flex xl:hidden'/>
-              <input type="text" className='hidden xl:flex rounded-full bg-gray-200 h-10 pl-4 w-[70%]' placeholder='Search ( ctrl + k )'/>
+              <input type="text" className='hidden xl:flex rounded-full bg-gray-200 h-10 pl-4 pr-2 w-[70%] product-hunt-ouline-color text-sm' placeholder='Search ( ctrl + k )'/>
             </div>
             {/* Second Section of the Laptop+ Header - Redirect Links Section */}
             <div className='flex items-center justify-between gap-12 lg:gap-14 '>
