@@ -1,42 +1,55 @@
-// src/hooks/useInfinitePosts.ts
 import { useEffect, useState } from "react";
 import type { Post } from "../types/post";
 import { fetchPosts } from "../services/productHuntService";
 
-// Nosso Hook customizado para scroll infinito com Product Hunt
 export const useInfinitePosts = (order: "RANKING" | "NEWEST") => {
-  // Lista dos posts carregados
   const [posts, setPosts] = useState<Post[]>([]);
-  // Controle de loading
   const [loading, setLoading] = useState(false);
-  // Controle de paginação (cursor)
   const [cursor, setCursor] = useState<string | undefined>(undefined);
-  // Saber se ainda há mais dados para carregar
   const [hasMore, setHasMore] = useState(true);
+  const [lastCall, setLastCall] = useState(Date.now()); // controle de tempo
 
-  // Função para carregar mais dados
   const loadMore = async () => {
-    if (loading || !hasMore) return;
-
+    const now = Date.now();
+    if (loading || !hasMore || now - lastCall < 1000) return;
+    setLastCall(now);
     setLoading(true);
 
     try {
       const data = await fetchPosts(order, cursor);
+
+      if (!data?.edges || !Array.isArray(data.edges)) {
+        console.warn("Sem dados válidos retornados da API.");
+        setHasMore(false);
+        return;
+      }
+
       const newPosts = data.edges.map((edge: any) => edge.node);
 
-      setPosts(prev => [...prev, ...newPosts]);
+      // Evita duplicados por id
+      const novosUnicos = newPosts.filter(
+        (novo: Post) => !posts.some((existente) => existente.id === novo.id)
+      );
+
+      setPosts(prev => [...prev, ...novosUnicos]);
       setCursor(data.edges[data.edges.length - 1]?.cursor);
       setHasMore(data.pageInfo.hasNextPage);
-    } catch (err) {
-      console.error("Erro ao carregar posts:", err);
+    } catch (err: any) {
+      if (err.response?.status === 429) {
+        console.warn("Rate limit excedido. Tente novamente em alguns minutos.");
+        setHasMore(false); // opcional
+      } else {
+        console.error("Erro ao carregar posts:", err);
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  // Carrega os primeiros dados ao montar
   useEffect(() => {
-    loadMore();
+    if (!loading && posts.length === 0) {
+      loadMore();
+    }
   }, [order]);
 
   return { posts, loadMore, hasMore, loading };
