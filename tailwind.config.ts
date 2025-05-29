@@ -5,8 +5,10 @@ const config: Config = {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
-  theme: {
-    extend: {},
+  extend: {
+    fontFamily: {
+       nunito: ["var(--font-nunito)"],
+    },
   },
   plugins: [],
 }
