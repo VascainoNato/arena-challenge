@@ -1,8 +1,11 @@
-import { useState } from "react";
 
-const Toggle = () => {
+type ToggleProps = {
+  activeTab: 'popular' | 'newest';
+  setActiveTab: (tab: 'popular' | 'newest') => void;
+};
+
+const Toggle = ({ activeTab, setActiveTab }: ToggleProps) => {
   // We declare a const useState, active and SetActive, to know which is active and set it, already passing the popular one as default.
-  const [activeTab, setActiveTab] = useState<'popular' | 'newest'>('popular');
   // Default styles (applied to all buttons).
   const baseClasses = "flex pb-2 w-full justify-center text-sm border-b-2";
   // Only classes that override when active.

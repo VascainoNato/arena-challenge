@@ -3,9 +3,12 @@ import { useInfinitePosts } from "../hooks/useInfinitePosts";
 
 let debounceTimeout: NodeJS.Timeout;
 
-const Content = () => {
-  const { posts, loadMore, hasMore, loading } = useInfinitePosts("RANKING");
+type ContentProps = {
+  order: 'RANKING' | 'NEWEST';
+};
 
+const Content = ({ order }: ContentProps) => {
+  const { posts, loadMore, hasMore, loading } = useInfinitePosts(order);
   // Scroll infinito
   const handleScroll = useCallback(() => {
     const bottom =
@@ -22,7 +25,7 @@ const Content = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+  }, [handleScroll, order]);
 
   // Se os primeiros 10 posts forem insuficientes para preencher a tela, carrega mais
   useEffect(() => {
@@ -37,7 +40,7 @@ const Content = () => {
     };
 
     fillIfNotScrollable();
-  }, [posts.length]);
+  }, [posts.length, order]);
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto p-4">
