@@ -8,10 +8,10 @@ import Toggle from './components/Toggle'
 function App() {
   return (
     <>
-      <div className="flex flex-col min-h-screen h-screen overflow-hidden bg-[#F8F8F8]">
+      <div className="flex flex-col min-h-screen h-screen bg-[#F8F8F8]">
         <Header />
         <Toggle/>
-        <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex-1 flex flex-col">
           <Content />
         </div>
         <div className='hidden md:flex'>
