@@ -16,6 +16,7 @@ export const fetchPosts = async (
           node {
             id
             name
+            tagline
             description
             votesCount
             thumbnail {
