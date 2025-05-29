@@ -2,6 +2,8 @@ import { useEffect, useCallback, useMemo } from "react";
 import { useInfinitePosts } from "../hooks/useInfinitePosts";
 import { useVoteStore } from "../store/useVoteStore";
 import { fetchPosts } from "../services/productHuntService";
+import iconbase from '../assets/icon-base.avif'
+import iconactive from '../assets/icon-active.avif'
 import type { Post } from "../types/post";
 
 let debounceTimeout: NodeJS.Timeout;
@@ -93,29 +95,47 @@ const Content = ({ order }: ContentProps) => {
   }, [posts, voteMap, order]);
 
   return (
-    <div className="flex flex-1 flex-col overflow-y-auto p-4">
-      {orderedPosts.map((post, index) => (
-        <div key={`${post.id}-${index}`} className="mb-2 mt-2 py-3 px-4 bg-white rounded-xl flex gap-4 items-center cursor-pointer">
-          <img
-            src={post.thumbnail.url}
-            alt={post.name}
-            className="w-20 h-20 object-cover rounded-lg"
-            loading="lazy"
-          />
-          <div className="flex flex-col flex-1">
-            <h2 className="font-bold">{post.name}</h2>
-            <p className="text-sm text-gray-600">{post.tagline}</p>
-          </div>    
-         
-          <span
-            className={`font-bold ${
-              justVoted[post.id] ? "text-orange-500" : "text-gray-800"
-            }`}
+    <div className="flex flex-1 flex-col overflow-y-auto p-4 pt-4 pr-8  bg-gray-100">
+    {orderedPosts.map((post, index) => {
+        const isUpvoted = justVoted[post.id] === true;
+
+        return (
+          <div
+            key={`${post.id}-${index}`}
+            className="mb-2 mt-2 py-3 pr-6 pl-4 bg-white rounded-xl flex gap-4 items-center cursor-pointer"
           >
-            {(voteMap[post.id] ?? post.votesCount)} votes
-          </span>
-        </div>
-      ))}
+            <img
+              src={post.thumbnail.url}
+              alt={post.name}
+              className="w-16 h-16 object-cover rounded-lg"
+              loading="lazy"
+            />
+            <div className="flex flex-col flex-1 pr-6">
+              <h2 className="font-bold">{post.name}</h2>
+              <p className="text-sm text-gray-600">{post.tagline}</p>
+            </div>
+
+           <div
+              className={`flex flex-col items-center rounded-2xl px-4 py-1 absolute right-2
+                ${isUpvoted ? "bg-[#FF6154] border-[#FF6154]" : "bg-white border-gray-200"} 
+                border`}
+            >
+              <img
+                src={isUpvoted ? iconactive : iconbase}
+                alt="icon"
+                className="h-8"
+              />
+              <span
+                className={`font-bold ${
+                  isUpvoted ? "text-white" : "text-gray-800"
+                }`}
+              >
+                {voteMap[post.id] ?? post.votesCount}
+              </span>
+            </div>
+          </div>
+        );
+      })}
       {loading && <p className="text-center py-4">Loading...</p>}
     </div>
   );
