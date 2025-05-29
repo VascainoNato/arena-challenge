@@ -4,6 +4,8 @@ import { useVoteStore } from "../store/useVoteStore";
 import { fetchPosts } from "../services/productHuntService";
 import iconbase from '../assets/icon-base.avif'
 import iconactive from '../assets/icon-active.avif'
+import iconchatbase from '../assets/icon-chat-base.avif'
+import iconchatactive from '../assets/icon-chat-active.avif'
 import type { Post } from "../types/post";
 
 let debounceTimeout: NodeJS.Timeout;
@@ -102,7 +104,7 @@ const Content = ({ order }: ContentProps) => {
         return (
           <div
             key={`${post.id}-${index}`}
-            className="mb-2 mt-2 py-3 pr-6 pl-4 bg-white rounded-xl flex gap-4 items-center cursor-pointer"
+            className="mb-2 mt-2 py-3 pr-6 pl-4 md:pr-3 md:pl-3  bg-white rounded-xl flex gap-4 items-center cursor-pointer"
           >
             <img
               src={post.thumbnail.url}
@@ -115,8 +117,27 @@ const Content = ({ order }: ContentProps) => {
               <p className="text-sm text-gray-600">{post.tagline}</p>
             </div>
 
+             <div
+              className={`flex-col items-center rounded-2xl px-4 py-1 hidden md:flex
+                ${isUpvoted ? "bg-[#FF6154] border-[#FF6154]" : "bg-white border-gray-200"} 
+                border`}
+            >
+              <img
+                src={isUpvoted ? iconchatactive : iconchatbase}
+                alt="icon"
+                className="h-8"
+              />
+              <span
+                className={`font-bold ${
+                  isUpvoted ? "text-white" : "text-gray-600"
+                }`}
+              >
+                {voteMap[post.id] ?? post.votesCount}
+              </span>
+            </div>
+
            <div
-              className={`flex flex-col items-center rounded-2xl px-4 py-1 absolute right-3
+              className={`flex flex-col items-center rounded-2xl px-4 py-1 absolute md:static right-3
                 ${isUpvoted ? "bg-[#FF6154] border-[#FF6154]" : "bg-white border-gray-200"} 
                 border`}
             >
@@ -127,7 +148,7 @@ const Content = ({ order }: ContentProps) => {
               />
               <span
                 className={`font-bold ${
-                  isUpvoted ? "text-white" : "text-gray-800"
+                  isUpvoted ? "text-white" : "text-gray-600"
                 }`}
               >
                 {voteMap[post.id] ?? post.votesCount}
