@@ -10,9 +10,13 @@
 
 body {
   font-family: var(--font-nunito);
+  overflow-y: scroll;       
+  scrollbar-width: none; 
 }
 
-.global-background-color{
-  background-color:#F8F8F8;
+body::-webkit-scrollbar {
+  display: none;           
 }
+
+
 
