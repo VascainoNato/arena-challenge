@@ -1,5 +1,8 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useMemo } from "react";
 import { useInfinitePosts } from "../hooks/useInfinitePosts";
+import { useVoteStore } from "../store/useVoteStore";
+import { fetchPosts } from "../services/productHuntService";
+import type { Post } from "../types/post";
 
 let debounceTimeout: NodeJS.Timeout;
 
@@ -9,6 +12,8 @@ type ContentProps = {
 
 const Content = ({ order }: ContentProps) => {
   const { posts, loadMore, hasMore, loading } = useInfinitePosts(order);
+  const { voteMap, justVoted } = useVoteStore();
+
   // Scroll infinito
   const handleScroll = useCallback(() => {
     const bottom =
@@ -42,10 +47,55 @@ const Content = ({ order }: ContentProps) => {
     fillIfNotScrollable();
   }, [posts.length, order]);
 
+  useEffect(() => {
+    if (order !== "RANKING") return;
+
+    let retryTimeout = 15000;
+    let timeoutId: NodeJS.Timeout;
+
+    const updateVotes = async () => {
+      try {
+        const data = await fetchPosts(order);
+        const novos = data.edges.map((edge: any) => edge.node);
+
+        const newVotes: Record<string, number> = {};
+        novos.forEach((post: Post) => {
+          newVotes[post.id] = post.votesCount;
+        });
+
+        useVoteStore.getState().updateVotes(newVotes);
+
+        retryTimeout = 15000; // ✅ reset em sucesso
+      } catch (err: any) {
+        console.error("Erro ao atualizar votos:", err);
+
+        if (err?.response?.status === 429) {
+          retryTimeout = Math.min(retryTimeout * 2, 60000); // ⏱️ aplica backoff
+          console.warn(`Rate limited. Reagendando em ${retryTimeout / 1000}s`);
+        }
+      }
+
+      timeoutId = setTimeout(updateVotes, retryTimeout); 
+    };
+
+    timeoutId = setTimeout(updateVotes, retryTimeout); // ⏳ primeira chamada
+
+    return () => clearTimeout(timeoutId); 
+  }, [order]);
+
+  const orderedPosts = useMemo(() => {
+    if (order !== "RANKING") return posts;
+
+    return [...posts].sort(
+      (a, b) =>
+        (voteMap[b.id] ?? b.votesCount) - (voteMap[a.id] ?? a.votesCount)
+    );
+  }, [posts, voteMap, order]);
+
   return (
     <div className="flex flex-1 flex-col overflow-y-auto p-4">
-      {posts.map((post, index) => (
-        <div key={`${post.id}-${index}`} className="mb-2 mt-2 p-2 bg-white rounded-xl flex gap-4 items-center">
+      {orderedPosts.map((post, index) => (
+        <div key={`${post.id}-${index}`} className="mb-2 mt-2 py-3 px-4 bg-white rounded-xl flex gap-4 items-center cursor-pointer">
           <img
             src={post.thumbnail.url}
             alt={post.name}
@@ -56,7 +106,14 @@ const Content = ({ order }: ContentProps) => {
             <h2 className="font-bold">{post.name}</h2>
             <p className="text-sm text-gray-600">{post.tagline}</p>
           </div>    
-          <span className="text-orange-500 font-bold">{post.votesCount} votes</span>
+         
+          <span
+            className={`font-bold ${
+              justVoted[post.id] ? "text-orange-500" : "text-gray-800"
+            }`}
+          >
+            {(voteMap[post.id] ?? post.votesCount)} votes
+          </span>
         </div>
       ))}
       {loading && <p className="text-center py-4">Loading...</p>}
