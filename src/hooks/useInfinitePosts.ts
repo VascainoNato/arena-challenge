@@ -9,16 +9,17 @@ export const useInfinitePosts = (order: "RANKING" | "NEWEST") => {
   const [hasMore, setHasMore] = useState(true);
   const [lastCall, setLastCall] = useState(Date.now());
 
-  // 🚀 CHAMADA INICIAL: Carrega os primeiros 10
+  // 🚀 CHAMADA INICIAL
   const loadInitial = async () => {
-    if (loading || posts.length > 0) return;
     setLoading(true);
-
     try {
       const data = await fetchPosts(order);
-
       const newPosts = data.edges.map((edge: any) => edge.node);
-      const filtrados = newPosts.filter((post: Post) => post.votesCount >= 20);
+
+      const filtrados =
+        order === "RANKING"
+          ? newPosts.filter((post: Post) => post.votesCount >= 20)
+          : newPosts;
 
       setPosts(filtrados);
       setCursor(data.edges[data.edges.length - 1]?.cursor);
@@ -30,7 +31,7 @@ export const useInfinitePosts = (order: "RANKING" | "NEWEST") => {
     }
   };
 
-  // 🌀 Scroll infinito: carrega mais
+  // 🌀 Scroll infinito
   const loadMore = async () => {
     const now = Date.now();
     if (loading || !hasMore || now - lastCall < 1000) return;
@@ -41,7 +42,11 @@ export const useInfinitePosts = (order: "RANKING" | "NEWEST") => {
     try {
       const data = await fetchPosts(order, cursor);
       const newPosts = data.edges.map((edge: any) => edge.node);
-      const filtrados = newPosts.filter((post: Post) => post.votesCount >= 20);
+
+      const filtrados =
+        order === "RANKING"
+          ? newPosts.filter((post: Post) => post.votesCount >= 20)
+          : newPosts;
 
       const novosUnicos = filtrados.filter(
         (novo: Post) => !posts.some((existente) => existente.id === novo.id)
@@ -57,7 +62,13 @@ export const useInfinitePosts = (order: "RANKING" | "NEWEST") => {
     }
   };
 
+  // 🔁 Quando o `order` muda, resetar tudo e buscar novamente
   useEffect(() => {
+    setPosts([]);
+    setCursor(undefined);
+    setHasMore(true);
+    setLastCall(Date.now());
+
     loadInitial();
   }, [order]);
 
