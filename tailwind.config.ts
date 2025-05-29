@@ -5,6 +5,10 @@ const config: Config = {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
+   safelist: [
+    'product-hunt-text-color',
+    'product-hunt-border-color',
+  ],
   extend: {
     fontFamily: {
        nunito: ["var(--font-nunito)"],

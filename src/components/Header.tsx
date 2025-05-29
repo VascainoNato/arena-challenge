@@ -37,7 +37,7 @@ const Header = () => {
             <div className='flex items-center justify-between gap-4 lg:gap-6 xl:gap-0'>
               <img src={productHunt} alt="logo-product-hunt" className='h-10 cursor-pointer'/>
               <img src={search} alt="search" className='h-10 flex xl:hidden'/>
-              <input type="text" className='hidden xl:flex rounded-full bg-gray-200 h-10 pl-4 pr-2 w-[70%] product-hunt-ouline-color text-sm' placeholder='Search ( ctrl + k )'/>
+              <input type="text" className='hidden xl:flex rounded-full bg-gray-200 h-10 pl-4 pr-2 w-[70%] outline-[#FF6154] text-sm' placeholder='Search ( ctrl + k )'/>
             </div>
             {/* Second Section of the Laptop+ Header - Redirect Links Section */}
             <div className='flex items-center justify-between gap-12 lg:gap-14 '>
@@ -58,7 +58,7 @@ const Header = () => {
               </div> 
             </div>
             {/* Third Section of the Laptop Header - Add Buttons, News and Logged In Profile Section */}
-            <div className='flex items-center justify-betwee gap-4 lg:gap-6'>
+            <div className='flex items-center justify-between gap-4 lg:gap-6'>
               <img src={add} alt="icon-add" className='h-10 border-2 border-gray-200 p-20% rounded-full xl:hidden'/>
               <div className='hidden xl:flex items-center justify-center rounded-full border-2 border-gray-200 p-1 cursor-pointer'>
                 <img src={add} alt="icon-add" className='h-8'/>
