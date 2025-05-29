@@ -2,6 +2,7 @@
 export interface Post {
   id: string;
   name: string;
+  tagline: string;
   description: string;
   votesCount: number;
   thumbnail: {
