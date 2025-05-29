@@ -1,9 +1,9 @@
-function Header() {
+const Header = () => {
   return (
     <>
-        Header
+      Header
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

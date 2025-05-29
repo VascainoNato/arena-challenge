@@ -1,9 +1,9 @@
-function Content() {
+const Content = () => {
   return (
     <>
-        Content
+      Content
     </>
-  )
-}
+  );
+};
 
-export default Content
+export default Content;
