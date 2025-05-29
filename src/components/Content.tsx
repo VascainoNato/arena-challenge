@@ -116,7 +116,7 @@ const Content = ({ order }: ContentProps) => {
             </div>
 
            <div
-              className={`flex flex-col items-center rounded-2xl px-4 py-1 absolute right-2
+              className={`flex flex-col items-center rounded-2xl px-4 py-1 absolute right-3
                 ${isUpvoted ? "bg-[#FF6154] border-[#FF6154]" : "bg-white border-gray-200"} 
                 border`}
             >
