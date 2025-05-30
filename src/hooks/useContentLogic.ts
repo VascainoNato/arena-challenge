@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useMemo } from "react";
-import { useInfinitePosts } from "./useInfinitePosts";
+import { useInfinitePosts } from "./infinitePosts/useInfinitePosts";
 import { useVoteStore } from "../store/useVoteStore";
-import { fetchPosts } from "../services/productHuntService";
+import { fetchVotesOnly } from "../services/productHuntService";
 import type { Post } from "../types/post";
 
 let debounceTimeout: NodeJS.Timeout;
@@ -44,19 +44,19 @@ export function useContentLogic(order: "RANKING" | "NEWEST") {
   useEffect(() => {
     if (order !== "RANKING") return;
 
-    let retryTimeout = 15000;
+     let retryTimeout = 60000;
     let timeoutId: NodeJS.Timeout;
 
     const updateVotes = async () => {
       try {
-        const data = await fetchPosts(order);
+        const data = await fetchVotesOnly(order);
         const novos = data.edges.map((edge: any) => edge.node);
         const newVotes: Record<string, number> = {};
         novos.forEach((post: Post) => {
           newVotes[post.id] = post.votesCount;
         });
         useVoteStore.getState().updateVotes(newVotes);
-        retryTimeout = 15000;
+        retryTimeout = 60000;
       } catch (err: any) {
         if (err?.response?.status === 429) {
           retryTimeout = Math.min(retryTimeout * 2, 60000);
