@@ -9,7 +9,7 @@ function App() {
   const [activeTab, setActiveTab] = useState<'popular' | 'newest'>('popular')
   return (
     <>
-      <div className="flex flex-col flex-1 bg-[#F8F8F8]">
+      <div className="flex flex-col flex-1 bg-[#F8F8F8] dark:bg-[#111827]">
         <Header />
         <Toggle activeTab={activeTab} setActiveTab={setActiveTab} />
         <div className="flex-1 flex flex-col min-h-screen">

@@ -12,8 +12,8 @@ const Content = ({ order }: ContentProps) => {
   const { orderedPosts, justVoted, loading } = useContentLogic(order);
 
   return (
-    <div className="flex flex-1 flex-col overflow-y-auto p-4 pt-2 pr-8 bg-gray-100 xl:justify-center xl:items-center">
-      <h1 className="hidden md:flex justify-start items-start w-full md:pl-4 md:pt-4 md:pb-4 md:font-semibold xl:w-full xl:max-w-7xl">
+    <div className="flex flex-1 flex-col overflow-y-auto p-4 pt-2 pr-8 bg-gray-100 xl:justify-center xl:items-center dark:bg-[#111827]">
+      <h1 className="hidden md:flex justify-start items-start w-full md:pl-4 md:pt-4 md:pb-4 md:font-semibold xl:w-full xl:max-w-7xl dark:text-[#f3f4f6]">
         Top Launching Products
       </h1>
 
@@ -23,7 +23,7 @@ const Content = ({ order }: ContentProps) => {
         return (
           <div
             key={`${post.id}-${index}`}
-            className="mb-2 mt-2 py-3 pr-6 pl-4 md:pr-3 md:pl-3 bg-white rounded-xl flex gap-4 items-center cursor-pointer xl:w-full xl:max-w-7xl"
+            className="mb-2 mt-2 py-3 pr-6 pl-4 md:pr-3 md:pl-3 bg-white dark:bg-[#1f2937] rounded-xl flex gap-4 items-center cursor-pointer xl:w-full xl:max-w-7xl"
           >
             <img
               src={post.thumbnail.url}
@@ -32,15 +32,15 @@ const Content = ({ order }: ContentProps) => {
               loading="lazy"
             />
             <div className="flex flex-col flex-1 pr-10">
-              <h2 className="font-bold">{post.name}</h2>
-              <p className="text-sm text-gray-600">{post.tagline}</p>
+              <h2 className="font-bold dark:text-[#f3f4f6]">{post.name}</h2>
+              <p className="text-sm text-gray-600 dark:text-[#f3f4f6]">{post.tagline}</p>
             </div>
 
             <div
               className={`flex-col items-center rounded-2xl px-4 py-1 hidden md:flex border-2 ${
                 isUpvoted
                   ? "bg-[#FF6154] border-[#FF6154]"
-                  : "bg-white border-gray-200"
+                  : "bg-white border-gray-200 dark:bg-[#1f2937] dark:border-[#374151] dark:text-[#f3f4f6]"
               }`}
             >
               <img
@@ -50,7 +50,7 @@ const Content = ({ order }: ContentProps) => {
               />
               <span
                 className={`font-bold ${
-                  isUpvoted ? "text-white" : "text-gray-600"
+                  isUpvoted ? "text-white dark:text-[#f3f4f6]" : "text-gray-600 dark:text-[#f3f4f6]"
                 }`}
               >
                 {post.votesCount}
@@ -61,7 +61,7 @@ const Content = ({ order }: ContentProps) => {
               className={`flex flex-col items-center rounded-2xl px-4 py-1 absolute md:static right-3 ${
                 isUpvoted
                   ? "bg-[#FF6154] border-[#FF6154]"
-                  : "bg-white border-gray-200"
+                  : "bg-white border-gray-200 dark:bg-[#1f2937] dark:border-[#374151]"
               } border-2`}
             >
               <img
@@ -71,7 +71,7 @@ const Content = ({ order }: ContentProps) => {
               />
               <span
                 className={`font-bold ${
-                  isUpvoted ? "text-white" : "text-gray-600"
+                  isUpvoted ? "text-white dark:text-[#f3f4f6]" : "text-gray-600 dark:text-[#f3f4f6]"
                 }`}
               >
                 {post.votesCount}
