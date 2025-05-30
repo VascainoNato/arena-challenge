@@ -185,7 +185,7 @@ export const useInfinitePosts = (order: "RANKING" | "NEWEST") => {
       } catch {
         console.warn("Error updating votes. Skipping until next round.");
       }
-    }, 130_000);
+    }, 90_000);
 
     return () => {
       if (cleanup instanceof Function) cleanup();

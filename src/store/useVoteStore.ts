@@ -16,6 +16,7 @@ export const useVoteStore = create<VoteStore>((set) => ({
     set((state) => {
         const updatedJustVoted: Record<string, boolean> = {};
 
+        // Compares old VoteMap with NewVotes. Marks the ID that had vote changes so we can highlight it in the interface.
         for (const id in newVotes) {
         const old = state.voteMap[id];
         const novo = newVotes[id];
@@ -25,7 +26,7 @@ export const useVoteStore = create<VoteStore>((set) => ({
         }
         }
 
-        // 🔁 Remove a cor laranja após 5 minutos
+        // We put a 5-minute highlight on the interface, after that, we clean it and return to the base interface.
         if (Object.keys(updatedJustVoted).length) {
         setTimeout(() => {
             set((s) => {
@@ -36,6 +37,7 @@ export const useVoteStore = create<VoteStore>((set) => ({
         }, 5 * 60 * 1000);
         }
 
+        //Update the global state
         return {
         voteMap: { ...state.voteMap, ...newVotes },
         justVoted: { ...state.justVoted, ...updatedJustVoted },

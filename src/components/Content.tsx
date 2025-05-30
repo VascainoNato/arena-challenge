@@ -80,7 +80,6 @@ const Content = ({ order }: ContentProps) => {
           </div>
         );
       })}
-
       {loading && (
         <div
           data-testid="skeleton"
