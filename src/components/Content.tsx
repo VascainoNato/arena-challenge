@@ -98,7 +98,7 @@ const Content = ({ order }: ContentProps) => {
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto p-4 pt-2 pr-8 bg-gray-100 xl:justify-center xl:items-center">
-      <h1 className="hidden md:flex justify-start items-start w-full md:pl-4 md:pt-4 md:pb-4 md:font-semibold xl:w-full xl:max-w-7xl ">Top Products Launching Today</h1>
+      <h1 className="hidden md:flex justify-start items-start w-full md:pl-4 md:pt-4 md:pb-4 md:font-semibold xl:w-full xl:max-w-7xl ">Top Launching Products</h1>
       {orderedPosts.map((post, index) => {
           const isUpvoted = justVoted[post.id] === true;
           return (
@@ -157,7 +157,15 @@ const Content = ({ order }: ContentProps) => {
             </div>
           );
         })}
-      {loading && <p className="text-center py-4">Loading...</p>}
+      {loading && (
+        <div data-testid="skeleton" className="flex justify-center items-center flex-1 h-full">
+          <div className="flex space-x-2 text-2xl text-[#FF6154]">
+            <span className="animate-bounce">.</span>
+            <span className="animate-bounce delay-200">.</span>
+            <span className="animate-bounce delay-400">.</span>
+          </div>
+        </div>
+        )}
     </div>
   );
 };
