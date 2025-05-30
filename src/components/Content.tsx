@@ -3,6 +3,9 @@ import iconbase from "../assets/icon-base.avif";
 import iconactive from "../assets/icon-active.avif";
 import iconchatbase from "../assets/icon-chat-base.avif";
 import iconchatactive from "../assets/icon-chat-active.avif";
+import type { Post } from "../types/post";
+import { useState } from "react";
+import PostModal from "./Modal/PostModal";
 
 type ContentProps = {
   order: "RANKING" | "NEWEST";
@@ -10,6 +13,7 @@ type ContentProps = {
 
 const Content = ({ order }: ContentProps) => {
   const { orderedPosts, justVoted, loading } = useContentLogic(order);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   return (
     <div className="flex flex-1 flex-col overflow-y-auto p-4 pt-2 pr-8 bg-gray-100 xl:justify-center xl:items-center dark:bg-[#111827]">
@@ -22,7 +26,7 @@ const Content = ({ order }: ContentProps) => {
 
         return (
           <div
-            key={`${post.id}-${index}`}
+            key={`${post.id}-${index}`} onClick={() => setSelectedPost(post)}
             className="mb-2 mt-2 py-3 pr-6 pl-4 md:pr-3 md:pl-3 bg-white dark:bg-[#1f2937] rounded-xl flex gap-4 items-center cursor-pointer xl:w-full xl:max-w-7xl"
           >
             <img
@@ -35,7 +39,6 @@ const Content = ({ order }: ContentProps) => {
               <h2 className="font-bold dark:text-[#f3f4f6]">{post.name}</h2>
               <p className="text-sm text-gray-600 dark:text-[#f3f4f6]">{post.tagline}</p>
             </div>
-
             <div
               className={`flex-col items-center rounded-2xl px-4 py-1 hidden md:flex border-2 ${
                 isUpvoted
@@ -92,7 +95,11 @@ const Content = ({ order }: ContentProps) => {
           </div>
         </div>
       )}
+      {selectedPost && (
+        <PostModal post={selectedPost} onClose={() => setSelectedPost(null)} />
+      )}
     </div>
+    
   );
 };
 
