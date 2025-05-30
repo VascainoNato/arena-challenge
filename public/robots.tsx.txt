@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://arena-challenge.vercel.app/sitemap.xml

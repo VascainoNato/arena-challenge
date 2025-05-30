@@ -11,7 +11,7 @@ const Header = () => {
   return (
     <>
       {/* Header Mobile Phone Devices */}
-      <div className="flex items-center pt-6 md:pt-0">
+      <header className="flex items-center pt-6 md:pt-0">
         <div className='flex pl-6 pr-6 justify-between w-full items-center md:hidden'>
           <img
             src={icon}
@@ -40,10 +40,10 @@ const Header = () => {
             </button>
           </div>
         </div>
-      </div> 
+      </header> 
 
       {/* Header Tablet + */}
-      <div className="flex items-center pt-6 md:pt-0">
+      <header className="flex items-center pt-6 md:pt-0">
         <div className='hidden md:flex h-20 items-center justify-center w-full border-b border-gray-200'>
           <div className='flex h-20 w-full max-w-7xl justify-between items-center md:px-6 xl:px-0'>
             {/* First Section of Laptop Header - Logo Section + Search */}
@@ -93,7 +93,7 @@ const Header = () => {
             </div>
           </div>
         </div>   
-     </div>
+     </header>
     </>
   );
 };
