@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import type { Post } from "../../types/post";
+import { useVoteStore } from "../../store/useVoteStore";
 
 type PostModalProps = {
   post: Post;
@@ -7,6 +8,12 @@ type PostModalProps = {
 };
 
 const PostModal = ({ post, onClose }: PostModalProps) => {
+
+  // We are searching the Zustand store for an updated vote map per post.
+   const voteMap = useVoteStore((state) => state.voteMap);
+   // It tries to fetch the most up-to-date number of votes for that post.id from voteMap. If it doesn't exist, it uses the original value from post.votesCount (which was present when the modal was opened).
+   const currentVotes = voteMap[post.id] ?? post.votesCount;
+
   // We added a modal closing via esc button
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -43,7 +50,7 @@ const PostModal = ({ post, onClose }: PostModalProps) => {
         >
             <button className="flex w-full items-center justify-center"> Visit Page</button>
         </a> 
-        <button className="flex w-full justify-center items-center bg-[#FF6154] border-[#FF6154] rounded-lg text-white">Upvote</button>
+        <button className="flex w-full justify-center items-center bg-[#FF6154] border-[#FF6154] rounded-lg text-white">Upvote ({currentVotes})</button>
          </div>
        
       </div>
