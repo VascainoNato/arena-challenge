@@ -7,6 +7,18 @@ export interface Post {
   thumbnail: {
     url: string;
   };
+  media: {
+    url: string;
+    type: string; 
+  }[];
+  makers: {
+    id: string;
+    name: string;
+    username: string;
+    profileImage: string;
+  }[];
+  slug: string;
+  website?: string;
 }
 
 export interface CachedPosts {
