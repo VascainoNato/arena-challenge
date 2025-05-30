@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+## Challenge Arena - Product Hunt
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project consists of the Arena challenge, for the Frontend position, where the proposed challenge was to make a mobile version of Product Hunt, where we must hit the official API and bring the most voted and new posts, and handle this data in the UI.
 
-Currently, two official plugins are available:
+Instructions: https://www.notion.so/arenateam/Front-end-code-challenge-1ff57fa6f69e80078a90f89995fcc574
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The project was built with:
+- React;
+- TailwindCSS;
+- Zustand;
+- ContextApi;
+- Axios.
+- Jest - UI unit tests.
+- Vite - PWA.
 
-## Expanding the ESLint configuration
+In addition to all the features requested in the challenge, we also included:
+- Production environment - Vercel;
+- Zustand for global control and updating of upvotes - Synchronized with the production API;
+- PWA with Vite - Working on all devices;
+- TTL with Zustand - Cache that persists for up to 03 minutes, to avoid unnecessary queries in the API;
+- Mobile-first on all devices;
+- Dark/Light mode with ContextAPI;
+- Compressed images with AVIF extension and Lazy rendering;
+- Animated skeleton for rendering more posts;
+- CSR in GraphQL, for code organization;
+- Insertion of hooks, services and reducers to improve organization;
+- Organized and standardized commits with Conventional Commit.
+- A video was recorded explaining the project, why the libs were used and possible improvements.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Important links
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- Production: https://arena-challenge.vercel.app/
+- Explanatory video: https://youtu.be/MuGKkL6F5hg - PT-BR.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## How to run the project locally
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Clone the repository
+git clone https://github.com/your-user/arena-challenge.git
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+2. Access the project directory
+cd arena-challenge
+
+3. Install the dependencies
+npm install
+
+4. Run the development environment
+npm run dev
+
+The application will be available at:
+http://localhost:5173
+
+## Author
+- Developed by Rafael Satyro;
+- Email: satyrorafa@gmail.com
+- Linkedin: https://www.linkedin.com/in/rafael-pereira-satyro/
+- Github: https://github.com/VascainoNato
+
+## License
+
+This project was developed exclusively for educational purposes and as part of the **Arena.im** selection process.
+
+It has no commercial purpose and should not be reused as a final product in production by third parties.
