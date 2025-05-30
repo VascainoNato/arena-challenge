@@ -22,7 +22,6 @@ const PostModal = ({ post, onClose }: PostModalProps) => {
     };
   }, [onClose]);
 
-  
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50">
       <div className="bg-white dark:bg-gray-900 p-6 rounded-lg w-[95%] md:w-[70%] md:h-[50%] lg:w-[60%] xl:w-[60%] xl:h-[40%] xl:p-10 2xl:w-[40%] 2xl:h-[55%] overflow-y-auto max-h-[90vh] relative">

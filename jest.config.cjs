@@ -10,4 +10,8 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   testMatch: ['**/?(*.)+(test).(ts|tsx)'],
+
+  moduleNameMapper: {
+    '\\.(jpg|jpeg|png|svg|webp|avif)$': '<rootDir>/__mocks__/fileMock.ts',
+  },
 };
