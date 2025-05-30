@@ -7,11 +7,11 @@ export const fetchPosts = async (
   cursor?: string
 ) => {
     // We define a GraphQL to query as a string.
-    // The first 10 defines the number of posts to retrieve.
+    // The first 20 defines the number of posts to retrieve.
     // If we have a cursor, we add it to fetch the next page of results.
   const query = `
     query {
-      posts(order: ${order}, first: 10${cursor ? `, after: "${cursor}"` : ""}) {
+      posts(order: ${order}, first: 25${cursor ? `, after: "${cursor}"` : ""}) {
         edges {
           node {
             id
@@ -41,5 +41,31 @@ export const fetchPosts = async (
     if (!res.data?.data?.posts) {
     throw new Error("No posts returned from Product Hunt API.");
   }
+  return res.data.data.posts;
+};
+
+export const fetchVotesOnly = async (order: "RANKING" | "NEWEST") => {
+  const query = `
+    query {
+      posts(order: ${order}, first: 25) {
+        edges {
+          node {
+            id
+            votesCount
+          }
+        }
+      }
+    }
+  `;
+  const res = await api.post("", { query });
+
+  if (res.data.errors) {
+    console.error("GraphQL Errors:", res.data.errors);
+  }
+
+  if (!res.data?.data?.posts) {
+    throw new Error("No vote data returned from Product Hunt API.");
+  }
+
   return res.data.data.posts;
 };
